@@ -40,34 +40,34 @@ pipeline {
             }
         }
 
-        stage('Update GitOps Deployment') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'github-creds',
-                    usernameVariable: 'GIT_USERNAME',
-                    passwordVariable: 'GIT_PASSWORD'
-                )]) {
-                    sh '''
-                        if [ -d "gitops" ]; then
-                            echo "gitops directory exists. Removing it..."
-                            rm -rf gitops
-                        fi
-                        git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/ITkannadigaru/GitOps.git gitops
-                        cd gitops/base/emailservice/
+        // stage('Update GitOps Deployment') {
+        //     steps {
+        //         withCredentials([usernamePassword(
+        //             credentialsId: 'github-creds',
+        //             usernameVariable: 'GIT_USERNAME',
+        //             passwordVariable: 'GIT_PASSWORD'
+        //         )]) {
+        //             sh '''
+        //                 if [ -d "gitops" ]; then
+        //                     echo "gitops directory exists. Removing it..."
+        //                     rm -rf gitops
+        //                 fi
+        //                 git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/ITkannadigaru/GitOps.git gitops
+        //                 cd gitops/base/emailservice/
 
-                        git config user.email "jenkins@ci.com"
-                        git config user.name "jenkins"
+        //                 git config user.email "jenkins@ci.com"
+        //                 git config user.name "jenkins"
 
-                        # Update image tag
-                        sed -i "s|image: .*emailservice.*|image: ${IMAGE_NAME}|g" deployment.yaml
+        //                 # Update image tag
+        //                 sed -i "s|image: .*emailservice.*|image: ${IMAGE_NAME}|g" deployment.yaml
 
-                        git add .
-                        git commit -m "Update emailservice image to ${IMAGE_NAME}"
-                        git push origin main
-                    '''
-                }
-            }
-        }
+        //                 git add .
+        //                 git commit -m "Update emailservice image to ${IMAGE_NAME}"
+        //                 git push origin main
+        //             '''
+        //         }
+        //     }
+        // }
 
     }
 
