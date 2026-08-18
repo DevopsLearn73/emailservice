@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "manojkrishnappa/emailservice:${GIT_COMMIT}"
+        IMAGE_NAME = "rohitkube/emailservice:${GIT_COMMIT}"
     }
 
     stages {
 
         stage('Git Checkout') {
             steps {
-                git url: 'https://github.com/ITkannadigaru/emailservice.git', branch: 'main'
+                git url: 'https://github.com/DevopsLearn73/emailservice.git', branch: 'main'
             }
         }
 
